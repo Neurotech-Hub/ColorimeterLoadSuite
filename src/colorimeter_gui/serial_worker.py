@@ -11,7 +11,8 @@ from PySide6.QtCore import QMutex, QThread, Signal
 
 
 BAUD = 115200
-ADC_MAX = 4095
+# Full-scale load (grams) for donut colormap.
+LOAD_MAX = 3000
 
 
 @dataclass(frozen=True)

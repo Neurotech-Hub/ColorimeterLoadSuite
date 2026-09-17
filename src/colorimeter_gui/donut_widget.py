@@ -1,4 +1,4 @@
-"""Three-sector annular donut widget mapping ADC pressure to color."""
+"""Three-sector annular donut widget mapping load to color."""
 
 from __future__ import annotations
 
@@ -9,16 +9,16 @@ from PySide6.QtCore import QRectF, Qt
 from PySide6.QtGui import QColor, QFont, QPainter, QPainterPath, QPen
 from PySide6.QtWidgets import QWidget
 
-from colorimeter_gui.serial_worker import ADC_MAX
+from colorimeter_gui.serial_worker import LOAD_MAX
 
 
 # Distinct base hues for S1 / S2 / S3 (clockwise from 12 o'clock).
 SECTOR_HUES = (210, 145, 25)  # blue, green, orange
 
 
-def adc_to_color(value: int, hue: int, adc_max: int = ADC_MAX) -> QColor:
-    """Map ADC to a sequential fill: dark → vivid at full scale."""
-    t = max(0.0, min(1.0, value / float(adc_max)))
+def load_to_color(value: int, hue: int, load_max: int = LOAD_MAX) -> QColor:
+    """Map load (grams) to a sequential fill: dark → vivid at full scale."""
+    t = max(0.0, min(1.0, value / float(load_max)))
     sat = int(40 + 180 * t)
     val = int(35 + 200 * t)
     return QColor.fromHsv(hue, sat, val)
@@ -80,7 +80,7 @@ class DonutWidget(QWidget):
             ring = path.subtracted(hole)
 
             painter.setPen(QPen(QColor(30, 30, 35), 1.5))
-            painter.setBrush(adc_to_color(val, hue))
+            painter.setBrush(load_to_color(val, hue))
             painter.drawPath(ring)
 
             mid_deg = start + span_deg / 2

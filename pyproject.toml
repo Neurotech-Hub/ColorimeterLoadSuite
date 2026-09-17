@@ -20,3 +20,6 @@ colorimeter-gui = "colorimeter_gui.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+colorimeter_gui = ["assets/fonts/*.ttf", "assets/fonts/*.txt"]
