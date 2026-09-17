@@ -33,7 +33,8 @@ ColorimeterGUI/
 ├── requirements.txt
 ├── pyproject.toml
 ├── docs/
-│   └── load_gui.png            # GUI screenshot
+│   ├── load_gui.png            # GUI screenshot
+│   └── colorimeter_node.jpg    # assembled sensor + Raven
 ├── scripts/
 │   └── install_fonts.py        # downloads DSEG 7-segment font into the package
 ├── arduino/
@@ -69,7 +70,17 @@ Flash [`arduino/ColorimeterLoadSensor/ColorimeterLoadSensor.ino`](arduino/Colori
 
 The sensing element is an **[Ohmite FSP03CE](https://www.digikey.com/en/products/detail/ohmite/FSP03CE/9383877)** three-sector force sensor, sized for Konica Minolta colorimeter–style apertures. A common **wiper** plus three **drive** terminals map to Raven `A0`–`A3`.
 
-Mechanical parts / fit: **[3D design on Fusion (a360.co)](https://a360.co/4rdJHkh)**.
+### Mechanical assembly
+
+![Colorimeter force node — FSP03CE, acrylic plate, and Raven](docs/colorimeter_node.jpg)
+
+CAD: **[Fusion 360 model](https://a360.co/4rdJHkh)**. The circular mount holds the FSP03CE; a clear acrylic bridge carries the Raven at the far end.
+
+| Material / hardware | Notes |
+|---------------------|--------|
+| **White PLA** | Printed on a **Bambu X1 Carbon** (sensor cup, Raven bracket / shell) |
+| **3 mm clear acrylic** | Flat plate linking the sensor stack to the Raven mount |
+| **M2 × 5 mm tapered stainless steel screws** | Flush fasteners into the acrylic |
 
 ### Circuit schematic
 
