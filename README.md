@@ -1,12 +1,12 @@
-# ColorimeterGUI
+# Colorimeter Load Suite
 
 A desktop control panel for a **three-sector force sensor** mounted like a Konica Minolta colorimeter aperture. The Python app talks over USB serial to a **Neurotech Hub Raven Node**, shows live sector load and total force in **grams**, and can record sessions to CSV.
 
-| | |
-|---|---|
-| **Microcontroller** | [Hublink Node Raven](https://github.com/Neurotech-Hub/Hublink-Node-Raven) — multipurpose ESP32-S3 wireless module |
-| **Force sensor** | [Ohmite FSP03CE](https://www.digikey.com/en/products/detail/ohmite/FSP03CE/9383877) — size-compatible with the Konica Minolta colorimeter |
-| **3D design** | [Fusion 360 model](https://a360.co/4rdJHkh) — mechanical housing / mount |
+|                     |                                                                                                                                           |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Microcontroller** | [Hublink Node Raven](https://github.com/Neurotech-Hub/Hublink-Node-Raven) — multipurpose ESP32-S3 wireless module                         |
+| **Force sensor**    | [Ohmite FSP03CE](https://www.digikey.com/en/products/detail/ohmite/FSP03CE/9383877) — size-compatible with the Konica Minolta colorimeter |
+| **3D design**       | [Fusion 360 model](https://a360.co/4rdJHkh) — mechanical housing / mount                                                                  |
 
 ![Load Cell Control Panel](docs/load_gui.png)
 
@@ -57,12 +57,12 @@ ColorimeterGUI/
 
 Use Neurotech Hub’s **[Hublink Node Raven](https://github.com/Neurotech-Hub/Hublink-Node-Raven)** — a multipurpose ESP32-S3-based wireless module. This project uses its USB serial port and analog pins `A0`–`A3`.
 
-| Signal | Raven pin |
-|--------|-----------|
-| Sensor wiper (ADC) | `PIN_A0` |
-| Sector 1 drive | `PIN_A1` |
-| Sector 2 drive | `PIN_A2` |
-| Sector 3 drive | `PIN_A3` |
+| Signal             | Raven pin |
+| ------------------ | --------- |
+| Sensor wiper (ADC) | `PIN_A0`  |
+| Sector 1 drive     | `PIN_A1`  |
+| Sector 2 drive     | `PIN_A2`  |
+| Sector 3 drive     | `PIN_A3`  |
 
 Flash [`arduino/ColorimeterLoadSensor/ColorimeterLoadSensor.ino`](arduino/ColorimeterLoadSensor/ColorimeterLoadSensor.ino) with the Raven / ESP32-S3 board package and the Hublink Node Raven library installed.
 
@@ -76,11 +76,11 @@ The sensing element is an **[Ohmite FSP03CE](https://www.digikey.com/en/products
 
 CAD: **[Fusion 360 model](https://a360.co/4rdJHkh)**. The circular mount holds the FSP03CE; a clear acrylic bridge carries the Raven at the far end.
 
-| Material / hardware | Notes |
-|---------------------|--------|
-| **White PLA** | Printed on a **Bambu X1 Carbon** (sensor cup, Raven bracket / shell) |
-| **3 mm clear acrylic** | Flat plate linking the sensor stack to the Raven mount |
-| **M2 × 5 mm tapered stainless steel screws** | Flush fasteners into the acrylic |
+| Material / hardware                          | Notes                                                                |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| **White PLA**                                | Printed on a **Bambu X1 Carbon** (sensor cup, Raven bracket / shell) |
+| **3 mm clear acrylic**                       | Flat plate linking the sensor stack to the Raven mount               |
+| **M2 × 5 mm tapered stainless steel screws** | Flush fasteners into the acrylic                                     |
 
 ### Circuit schematic
 
@@ -102,11 +102,11 @@ One sector is read at a time: that drive line is set **LOW**, the others **HIGH*
          sector 3 ------------------- PIN_A3
 ```
 
-| Part | Role |
-|------|------|
+| Part              | Role                                                       |
+| ----------------- | ---------------------------------------------------------- |
 | **3.3 kΩ** to VDD | Pull-up; forms a divider with the active sector resistance |
-| **330 Ω** | Series isolation into the ADC |
-| **0.1 µF** | Filter from `PIN_A0` to GND |
+| **330 Ω**         | Series isolation into the ADC                              |
+| **0.1 µF**        | Filter from `PIN_A0` to GND                                |
 
 Unloaded, the ADC sits near full scale (~4095). Pressing a sector lowers resistance to the active drive and pulls the reading down. Firmware only reports load when `ADC < 3900`, using:
 
@@ -176,10 +176,10 @@ millis,d1,d2,d3,force
 12345,120,80,200,133
 ```
 
-| Field | Meaning |
-|-------|---------|
-| `millis` | Device time (ms) |
-| `d1`…`d3` | Sector loads (grams) |
-| `force` | Mean of d1–d3 (grams) |
+| Field     | Meaning               |
+| --------- | --------------------- |
+| `millis`  | Device time (ms)      |
+| `d1`…`d3` | Sector loads (grams)  |
+| `force`   | Mean of d1–d3 (grams) |
 
 No host commands are required; the stream is Raven → PC only.
